@@ -1,0 +1,19 @@
+.App {
+  /* margin-top: 15px; */
+  width: 100%;
+  padding: 0px;
+  /* color: #EEE8D9; */
+}
+
+.App .navbar-brand {
+  font-weight: bold;
+}
+
+i {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.shadow {
+  box-shadow: 0 12px 15px 0 rgba(0,0,0,.24), 0 17px 50px 0 rgba(0,0,0,.19);
+}
