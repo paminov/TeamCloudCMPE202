@@ -1,7 +1,7 @@
 #### Requirements
 * 4 APIs for Starbucks app
 * UI
-* Deployement
+* Deployment
 
 #### Design Notes
 
