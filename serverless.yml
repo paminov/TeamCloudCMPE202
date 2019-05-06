@@ -10,7 +10,10 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-notes
+  cardstableName: ${self:custom.stage}-cards
+  carttableName: ${self:custom.stage}-cart
+  menutableName: ${self:custom.stage}-menu
+  transactiontableName: ${self:custom.stage}-transaction
   # Set our DynamoDB throughput for prod and all other non-prod stages.
   tableThroughputs:
     prod: 5
@@ -27,13 +30,16 @@ custom:
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: prod
+  stage: dev
   region: us-west-2
 
   # These environment variables are made available to our functions
   # under process.env.
   environment:
-    tableName: ${self:custom.tableName}
+    cardstableName: ${self:custom.cardstableName}
+    carttableName: ${self:custom.carttableName}
+    menutableName: ${self:custom.menutableName}
+    transactiontableName: ${self:custom.transactiontableName}
     stripeSecretKey: ${self:custom.environment.stripeSecretKey}
 
   iamRoleStatements:
@@ -49,7 +55,10 @@ provider:
       # Restrict our IAM role permissions to
       # the specific table for the stage
       Resource:
-        - "Fn::GetAtt": [ NotesTable, Arn ]
+        - "Fn::GetAtt": [ CardsTable, Arn ]
+        - "Fn::GetAtt": [ CartTable, Arn ]
+        - "Fn::GetAtt": [ MenuTable, Arn ]
+        - "Fn::GetAtt": [ TransactionTable, Arn ]
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
