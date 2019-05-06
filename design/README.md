@@ -17,4 +17,4 @@ components where chosen for system design:
 * DynamoDB - NoSQL db. Gives us flexibility if schema changes occur
 * AWS Cognito - For user authentication
 
-![Design Diagram] (design.png)
+![Design Diagram](design.png)
