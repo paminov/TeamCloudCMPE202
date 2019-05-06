@@ -70,6 +70,42 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  getCart:
+    handler: api/cartHandler.retrieveCart
+    events:
+      - http:
+          path: cart
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  addItemToCart:
+    handler: api/cartHandler.addItem
+    events:
+      - http:
+          path: cart
+          method: patch
+          cors: true
+          authorizer: aws_iam
+
+  removeItemFromCart:
+    handler: api/cartHandler.removeItem
+    events:
+      - http:
+          path: cart/{item}
+          method: delete
+          cors: true
+          authorizer: aws_iam
+
+  clearCart:
+    handler: api/cartHandler.clearCart
+    events:
+      - http:
+          path: cart
+          method: delete
+          cors: true
+          authorizer: aws_iam
+
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors
