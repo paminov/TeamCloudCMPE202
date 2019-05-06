@@ -1,4 +1,4 @@
-# CMPE 281 Project 1
+# CMPE 202
 
 ### Installation
 
