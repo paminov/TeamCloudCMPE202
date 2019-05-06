@@ -10,7 +10,7 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-notes
+  menutableName: ${self:custom.stage}-menu
   # Set our DynamoDB throughput for prod and all other non-prod stages.
   tableThroughputs:
     prod: 5
@@ -33,7 +33,8 @@ provider:
   # These environment variables are made available to our functions
   # under process.env.
   environment:
-    tableName: ${self:custom.tableName}
+    stage: prod
+    menutableName: ${self:custom.menutableName}
     stripeSecretKey: ${self:custom.environment.stripeSecretKey}
 
   iamRoleStatements:
@@ -49,7 +50,7 @@ provider:
       # Restrict our IAM role permissions to
       # the specific table for the stage
       Resource:
-        - "Fn::GetAtt": [ NotesTable, Arn ]
+        - "Fn::GetAtt": [ MenuTable, Arn ]
 
 functions:
   listMenu:
