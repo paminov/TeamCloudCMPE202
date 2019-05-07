@@ -106,7 +106,7 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  ardCreate:
+  CardCreate:
     handler: api/cardsHandler.create
     events:
       - http:
