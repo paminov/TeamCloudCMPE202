@@ -10,7 +10,10 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
+  cardstableName: ${self:custom.stage}-cards
+  carttableName: ${self:custom.stage}-cart
   menutableName: ${self:custom.stage}-menu
+  transactiontableName: ${self:custom.stage}-transaction
   # Set our DynamoDB throughput for prod and all other non-prod stages.
   tableThroughputs:
     prod: 5
@@ -34,7 +37,10 @@ provider:
   # under process.env.
   environment:
     stage: prod
+    cardstableName: ${self:custom.cardstableName}
+    carttableName: ${self:custom.carttableName}
     menutableName: ${self:custom.menutableName}
+    transactiontableName: ${self:custom.transactiontableName}
     stripeSecretKey: ${self:custom.environment.stripeSecretKey}
 
   iamRoleStatements:
@@ -50,8 +56,10 @@ provider:
       # Restrict our IAM role permissions to
       # the specific table for the stage
       Resource:
+        - "Fn::GetAtt": [ CardsTable, Arn ]
+        - "Fn::GetAtt": [ CartTable, Arn ]
         - "Fn::GetAtt": [ MenuTable, Arn ]
-
+        - "Fn::GetAtt": [ TransactionTable, Arn ]
 functions:
   listMenu:
     handler: api/menuHandler.list
@@ -59,6 +67,42 @@ functions:
       - http:
           path: menu
           method: get
+          cors: true
+          authorizer: aws_iam
+
+  getCart:
+    handler: api/cartHandler.retrieveCart
+    events:
+      - http:
+          path: cart
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  addItemToCart:
+    handler: api/cartHandler.addItem
+    events:
+      - http:
+          path: cart
+          method: patch
+          cors: true
+          authorizer: aws_iam
+
+  removeItemFromCart:
+    handler: api/cartHandler.removeItem
+    events:
+      - http:
+          path: cart/{item}
+          method: delete
+          cors: true
+          authorizer: aws_iam
+
+  clearCart:
+    handler: api/cartHandler.clearCart
+    events:
+      - http:
+          path: cart
+          method: delete
           cors: true
           authorizer: aws_iam
 
