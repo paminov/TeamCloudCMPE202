@@ -1,0 +1,8 @@
+{
+  "body": "{\"cardNumber\":\"123456788\",\"pin\":\"123\",\"balance\":\"10\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}
