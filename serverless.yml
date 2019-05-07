@@ -106,6 +106,42 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  cardCreate:
+    handler: api/cardsHandler.createCard
+    events:
+      - http:
+          path: card
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  cardGet:
+    handler: api/cardsHandler.retrieveCard
+    events:
+      - http:
+          path: card
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  cardUpdate:
+    handler: api/cardsHandler.updateCard
+    events:
+      - http:
+          path: card
+          method: put
+          cors: true
+          authorizer: aws_iam
+
+  cardDelete:
+    handler: api/cardsHandler.removeCard
+    events:
+      - http:
+          path: card
+          method: delete
+          cors: true
+          authorizer: aws_iam         
+
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors
