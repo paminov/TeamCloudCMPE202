@@ -140,7 +140,34 @@ functions:
           path: card
           method: delete
           cors: true
-          authorizer: aws_iam         
+          authorizer: aws_iam
+
+  addToTransactions:
+    handler: api/transactionsHandler.addTransaction
+    events:
+      - http:
+          path: transactions
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  getTransactions:
+    handler: api/transactionsHandler.getTransactions
+    events:
+      - http:
+          path: transactions
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  clearTransactions:
+    handler: api/transactionsHandler.clearTransactions
+    events:
+      - http:
+          path: transactions
+          method: delete
+          cors: true
+          authorizer: aws_iam        
 
 # Create our resources with separate CloudFormation templates
 resources:
