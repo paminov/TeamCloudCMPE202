@@ -107,7 +107,7 @@ functions:
           authorizer: aws_iam
 
   cardCreate:
-    handler: api/cardsHandler.create
+    handler: api/cardsHandler.createCard
     events:
       - http:
           path: card
@@ -134,7 +134,7 @@ functions:
           authorizer: aws_iam
 
   cardDelete:
-    handler: api/cardsHandler.remove
+    handler: api/cardsHandler.removeCard
     events:
       - http:
           path: card

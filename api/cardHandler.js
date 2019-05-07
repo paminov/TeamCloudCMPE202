@@ -2,7 +2,7 @@ import * as dynamoDbLib from "./lib/dynamodb-lib";
 import { success, failure } from "./lib/response-lib";
 
 //creates preference
-export async function create(event, context) {
+export async function createCard(event, context) {
     const data = JSON.parse(event.body);
     const params = {
         TableName: process.env.cardstableName,
@@ -46,7 +46,7 @@ export async function retrieveCard(event, context) {
     }
 }
 
-export async function remove(event, context) {
+export async function removeCard(event, context) {
 
     const params = {
         TableName: process.env.cardstableName,
