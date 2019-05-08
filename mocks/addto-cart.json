@@ -1,0 +1,8 @@
+{
+  "body": "{\"name\":\"Caffe Mocha\",\"cost\":\"3.95\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}
