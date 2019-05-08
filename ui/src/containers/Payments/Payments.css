@@ -1,0 +1,25 @@
+.card-holder {
+    background-color: red;
+    border-radius: 10px;
+    padding: 20px;
+}
+.w-50 {
+    width: 50%
+}
+.inline {
+    display: -webkit-inline-box;
+}
+.d-flex {
+    display: flex;
+}
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+.rowC{
+    display:flex;
+    flex-direction:row;
+    margin: auto;
+    width: 50%;
+}
