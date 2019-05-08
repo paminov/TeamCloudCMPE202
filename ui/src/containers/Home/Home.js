@@ -28,7 +28,25 @@ export default class Home extends Component {
     renderHome() {
         return (
             <div className="home-page">
-                Home
+                <Jumbotron>
+                    <Tabs defaultActiveKey="order" id="uncontrolled-tab-example">
+                        <Tab eventKey="payments" title="Payments">
+                            <div className="tab-container">
+                                <Payments />
+                            </div>
+                        </Tab>
+                        <Tab eventKey="order" title="Order">
+                            <div className="tab-container">
+                                <Order />
+                            </div>
+                        </Tab>
+                        <Tab eventKey="history" title="History">
+                            <div className="tab-container">
+                                <History />
+                            </div>
+                        </Tab>
+                    </Tabs>
+                </Jumbotron>
             </div>
         );
     }
