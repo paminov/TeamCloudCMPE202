@@ -4,11 +4,12 @@ import { success, failure } from "./lib/response-lib";
 //creates preference
 export async function createCard(event, context) {
     const data = JSON.parse(event.body);
+    console.log("DATA:", data, process.env.cardstableName)
     const params = {
         TableName: process.env.cardstableName,
         Item: {
-            userID: event.requestContext.identity.cognitoIdentityId,
-            cardNumber: data.cardNumber,
+            userId: event.requestContext.identity.cognitoIdentityId,
+            cardId: data.cardNumber,
             pin: data.pin,
             balance: data.balance,
         }
@@ -28,7 +29,7 @@ export async function retrieveCard(event, context) {
     const params = {
         TableName: process.env.cardstableName,
         Key: {
-            userID: event.requestContext.identity.cognitoIdentityId
+            userId: event.requestContext.identity.cognitoIdentityId
         }
     };
 
@@ -51,7 +52,7 @@ export async function removeCard(event, context) {
     const params = {
         TableName: process.env.cardstableName,
         Key: {
-            userID: event.requestContext.identity.cognitoIdentityId
+            userId: event.requestContext.identity.cognitoIdentityId
         },
         ReturnValues: 'ALL_OLD'
     };
@@ -76,7 +77,7 @@ export async function updateCard(event, context) {
     const params = {
         TableName: process.env.cardstableName,
         Key: {
-            userID: event.requestContext.identity.cognitoIdentityId
+            userId: event.requestContext.identity.cognitoIdentityId
         },
             UpdateExpression: null,
             ExpressionAttributeValues: {}
