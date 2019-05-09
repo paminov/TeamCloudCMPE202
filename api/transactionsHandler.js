@@ -24,7 +24,8 @@ export async function addTransaction(event, context) {
         var cardBalance=0;
         var cartItem;
         var card;
-        const params1 = {
+
+        const paramsGetCart = {
             FunctionName: lambdaName + "-getCart",
             Payload: JSON.stringify({
                 "requestContext": {
@@ -35,18 +36,18 @@ export async function addTransaction(event, context) {
             }),
         };
 
-        const resp1 = await getLambda(lambda, params1);
-        const payload1 = JSON.parse(resp1.Payload);
-        console.log('getLambda getCart returned payload', payload1);
+        const respGetCart = await getLambda(lambda, paramsGetCart);
+        const payloadGetCart = JSON.parse(respGetCart.Payload);
+        console.log('getLambda getCart returned payload', payloadGetCart);
 
-        if (payload1.body) {
-            cartItem = JSON.parse(payload1.body);
+        if (payloadGetCart.body) {
+            cartItem = JSON.parse(payloadGetCart.body);
             totalCost = cartItem.totalCost;
         } else {
             return failure({ status: false, error: "Cart is Empty."});
         }
 
-        const params2 = {
+        const paramsGetCard = {
             FunctionName: lambdaName + "-cardGet",
             Payload: JSON.stringify({
                     "requestContext": {
@@ -56,12 +57,12 @@ export async function addTransaction(event, context) {
                     }
             }),
         };
-        const resp2 = await getLambda(lambda, params2);
-        const payload2 = JSON.parse(resp2.Payload);
-        console.log('getLambda cardGet returned payload', payload2);
+        const respGetCard = await getLambda(lambda, paramsGetCard);
+        const payloadGetCard = JSON.parse(respGetCard.Payload);
+        console.log('getLambda cardGet returned payload', payloadGetCard);
 
-        if (payload2.body) {
-            card = JSON.parse(payload2.body);
+        if (payloadGetCard.body) {
+            card = JSON.parse(payloadGetCard.body);
             cardBalance = card.balance;
         } else {
             return failure({ status: false, error: "No Card added for user"});
@@ -69,7 +70,7 @@ export async function addTransaction(event, context) {
 
         var balance = cardBalance-totalCost;
         if(balance>0) {
-            const params3 = {
+            const paramsUpdateCard = {
                 FunctionName: lambdaName + "-cardUpdate",
                 Payload: JSON.stringify({
                     "body": {
@@ -84,9 +85,9 @@ export async function addTransaction(event, context) {
             };
 
             console.log("Calling CardUpdate");
-            const resp3 = await getLambda(lambda, params3);
+            const respUpdateCard = await getLambda(lambda, paramsUpdateCard);
 
-            console.log('Response of CardUpdate',resp3);
+            console.log('Response of CardUpdate',respUpdateCard);
 
             var params = {
                 TableName: process.env.transactiontableName,
@@ -124,6 +125,22 @@ export async function addTransaction(event, context) {
                 };
                 await dynamoDbLib.call("update", params);
             }
+
+            //Clear The Cart
+
+            const paramsClearCart = {
+            FunctionName: lambdaName + "-clearCart",
+            Payload: JSON.stringify({
+                    "requestContext": {
+                        "identity": {
+                            "cognitoIdentityId": event.requestContext.identity.cognitoIdentityId
+                        }
+                    }
+                }),
+            };
+            const respClearCart = await getLambda(lambda, paramsClearCart);
+            const payloadClearCart = JSON.parse(respClearCart.Payload);
+            console.log('getLambda clearCart returned payload', payloadClearCart);
 
             return success({ status: true });
         } else {
