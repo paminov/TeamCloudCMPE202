@@ -38,3 +38,12 @@ td.addToCart {
 .button-ml{
     margin-left: 20px;
 }
+.grid {
+    display: grid;
+}
+.center {
+    text-align: center;
+}
+.mt-5 {
+    margin-top: 5px;
+}
