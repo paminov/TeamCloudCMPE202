@@ -3,6 +3,12 @@
 * UI
 * Deployment
 
+#### Documents
+* [Link to Project Board](project_board.xlsx)
+* [Link to Sprint Task Sheet](sprint_task_sheet.xlsx)
+* [Link to Daily Standup Meeting Journal](standup_journal.xlsx)
+* [Link to Presentation Slides](Team-Cloud-202-Final-Project.pptx)
+
 #### Design Notes
 
 Serverless design was chosen for the application since there is no component of
@@ -16,5 +22,16 @@ components where chosen for system design:
 * API Gateway - API endpoints that are linked to Lambda functions
 * DynamoDB - NoSQL db. Gives us flexibility if schema changes occur
 * AWS Cognito - For user authentication
+* AWS S3 - Deployement of UI components
+* AWS CloudWatch - used for debugging of the deployment. Lambda functions would create their logs in CloudWatch
+
 
 ![Design Diagram](design.png)
+
+
+#### API Details
+![API Details](apis.png)
+
+
+#### UI Design
+![UI Wireframe](UIWireFrame.jpg)

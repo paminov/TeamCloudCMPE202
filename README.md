@@ -42,3 +42,7 @@ Finally, run this to deploy to your AWS account.
 $ serverless deploy
 ```
 
+#### Design Notes and Documentation
+
+The design notes, architecture diagram, project board, and sprint notes are uploaded here:
+[Design & documentation](/design)
