@@ -50,11 +50,15 @@ Resources:
     Properties:
       TableName: ${self:custom.transactiontableName}
       AttributeDefinitions:
+        - AttributeName: transactionId
+          AttributeType: S
         - AttributeName: userID
           AttributeType: S
       KeySchema:
-        - AttributeName: userID
+        - AttributeName: transactionId
           KeyType: HASH
+        - AttributeName: userID
+          KeyType: RANGE
       # Set the capacity based on the stage
       ProvisionedThroughput:
         ReadCapacityUnits: ${self:custom.tableThroughput}
