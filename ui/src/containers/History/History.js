@@ -20,7 +20,7 @@ export default class History extends Component {
     async getTransactions() {
         try {
             const transactions = await this.transactions();
-            this.setState({ transactions: transactions.Item });
+            this.setState({ transactions: transactions.Items });
         } catch (e) {
             alert(e);
         }
@@ -31,21 +31,24 @@ export default class History extends Component {
         return API.get("","/transactions")
     }
 
-    renderTransactions = () => {
-        const { transactions } = this.state;
-        transactions.map((item) => {
-            return <ListGroupItem>{item.totalCost.toFixed(2)}</ListGroupItem>
-        })
-    }
-
     render() {
         const { transactions } = this.state;
-        console.log(transactions);
         return (
             <div>
-                <ListGroup variant="flush">
-                    {/* { transactions && this.renderTransactions() } */}
-                </ListGroup>
+                {
+                    transactions.map((item) => {
+                        const { menuItems } = item;
+                        return (
+                            <ListGroup variant="flush">
+                                    {
+                                        menuItems.map((menuItem) => {
+                                            return <ListGroupItem>{`${menuItem.name} - $${Number(menuItem.cost).toFixed(2)}`}</ListGroupItem>
+                                        })
+                                    }
+                                <ListGroupItem><strong>Total: </strong>{`$${Number(item.totalCost).toFixed(2)}`}</ListGroupItem>
+                            </ListGroup>)
+                        })
+                }
             </div>
         );
     }
