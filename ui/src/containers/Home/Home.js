@@ -13,7 +13,8 @@ export default class Home extends Component {
             files: [],
             isLoggedIn: false,
             firstname: null,
-            lastname: null
+            lastname: null,
+            key: 'order',
         };
     }
 
@@ -25,24 +26,38 @@ export default class Home extends Component {
         this.setState({isLoggedIn});
     }
 
+    renderTab = (key) => {
+        if (key === 'order') {
+            return <Order />
+        } else if (key === 'payments') {
+            return <Payments />
+        } else if (key === 'history') {
+            return <History />
+        }
+    }
+
     renderHome() {
         return (
             <div className="home-page">
                 <Jumbotron>
-                    <Tabs defaultActiveKey="order" id="uncontrolled-tab-example">
+                        <Tabs
+                            id="controlled-tab-example"
+                            activeKey={this.state.key}
+                            onSelect={key => this.setState({ key })}
+                        >
                         <Tab eventKey="payments" title="Payments">
                             <div className="tab-container">
-                                <Payments />
+                                { this.renderTab(this.state.key) }
                             </div>
                         </Tab>
                         <Tab eventKey="order" title="Order">
                             <div className="tab-container">
-                                <Order />
+                                { this.renderTab(this.state.key) }
                             </div>
                         </Tab>
                         <Tab eventKey="history" title="History">
                             <div className="tab-container">
-                                <History />
+                                { this.renderTab(this.state.key) }
                             </div>
                         </Tab>
                     </Tabs>
