@@ -95,6 +95,8 @@ export default class Order extends Component {
             return
         }
         await this.processPayment();
+        await this.fetchCart();
+        await this.getCard();
         this.setState({ checkingOut: false });
     }
 
@@ -150,7 +152,7 @@ export default class Order extends Component {
                         })
                     }
                     <hr/>
-                    ${ cost.toFixed(2) }
+                    ${ cost }
                 </Modal.Body>
                 <Modal.Footer>
                 <Button bsStyle="secondary" onClick={() => this.endCheckout('cancel')}>
@@ -167,7 +169,7 @@ export default class Order extends Component {
                 {!isLoading && 
                 <div className="menu-holder">
                     <span className="shopping-cart pull-right">
-                        <i className="fas fa-shopping-cart fa-fw" />{cart.length} items ($ {cost.toFixed(2)})
+                        <i className="fas fa-shopping-cart fa-fw" />{cart.length} items ($ {cost})
                         <Button onClick={this.showCheckout} className="button-ml" bsStyle="warning" disabled={cart.length === 0}>Checkout</Button>
                     </span>
                     <span className="shopping-cart pull-right mt-5">
