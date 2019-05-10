@@ -25,3 +25,14 @@ components where chosen for system design:
 
 #### API Details
 ![API Details](apis.png)
+
+
+#### UI Design
+![UI Wireframe](UIWireFrame.jpg)
+
+#### Documents
+* ![Link to Project Board](Project Board.xlsx)
+* ![Link to Sprint Task Sheet](Sprint Task Sheet.xlsx)
+* ![Link to Daily Standup Meeting Journal](Daily Standup Meeting Journal.xlsx)
+* ![Link to Presentation Slides](Team-Cloud-202-Final-Project.pptx)
+
