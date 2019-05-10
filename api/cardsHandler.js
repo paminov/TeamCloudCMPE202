@@ -1,7 +1,13 @@
 import * as dynamoDbLib from "./lib/dynamodb-lib";
 import { success, failure } from "./lib/response-lib";
 
-//creates preference
+/**
+ * Function to add new card
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON Response with add card status
+ */
+  
 export async function createCard(event, context) {
     const data = JSON.parse(event.body);
     console.log("DATA:", data, process.env.cardstableName)
@@ -25,6 +31,13 @@ export async function createCard(event, context) {
 
 }
 
+/**
+ * Function to retrieve a card
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON Response containing card details of a user
+ */
+
 export async function retrieveCard(event, context) {
     const params = {
         TableName: process.env.cardstableName,
@@ -47,6 +60,13 @@ export async function retrieveCard(event, context) {
     }
 }
 
+/**
+ * Function to remove a card
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON Response with remove card status
+ */
+
 export async function removeCard(event, context) {
 
     const params = {
@@ -66,6 +86,13 @@ export async function removeCard(event, context) {
     }
 }
 
+/**
+ * Function to remove a card
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON Response with update card status
+ */
+ 
 export async function updateCard(event, context) {
     var data;
     if (typeof(event.body)=="string") {
