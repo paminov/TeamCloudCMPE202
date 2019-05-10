@@ -1,5 +1,10 @@
 import * as dynamoDbLib from "./dynamodb-lib";
 
+/**
+ * Function to get a users cart
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @return Object containing updated cart items of the user
+ */
 export async function getCart(event) {
     const params = {
         TableName: process.env.carttableName,
