@@ -2,7 +2,7 @@
   /* margin-top: 15px; */
   width: 100%;
   padding: 0px;
-  /* color: #EEE8D9; */
+  color: #EEE8D9;
 }
 
 .App .navbar-brand {
@@ -19,4 +19,7 @@ i {
 }
 .sub-title {
   font-weight: bold;
+}
+.jumbotron{
+  color: black;
 }

@@ -95,6 +95,8 @@ export default class Order extends Component {
             return
         }
         await this.processPayment();
+        await this.fetchCart();
+        await this.getCard();
         this.setState({ checkingOut: false });
     }
 
@@ -123,7 +125,7 @@ export default class Order extends Component {
                 let isInCart = cart.findIndex(cartItem => cartItem.name === item.name);
                 return (<tr>
                     <td>{item.name.toLowerCase()}</td>
-                    <td>{item.cost}</td>
+                    <td>{Number(item.cost).toFixed(2)}</td>
                     <td class="addToCart"><Button bsStyle="success" onClick={() => this.addToCart(i)} disabled={noFundsRemaining || isInCart !== -1}><i className="fas fa-plus fa-fw"></i>Add to cart</Button></td>
                     <td class="addToCart"><Button bsStyle="danger" onClick={() => this.removeFromCart(isInCart)} disabled={isInCart === -1}><i className="fas fa-minus fa-fw"></i>Delete</Button></td>
                 </tr>)
@@ -150,7 +152,7 @@ export default class Order extends Component {
                         })
                     }
                     <hr/>
-                    ${ cost.toFixed(2) }
+                    ${ Number(cost).toFixed(2) }
                 </Modal.Body>
                 <Modal.Footer>
                 <Button bsStyle="secondary" onClick={() => this.endCheckout('cancel')}>
@@ -167,7 +169,7 @@ export default class Order extends Component {
                 {!isLoading && 
                 <div className="menu-holder">
                     <span className="shopping-cart pull-right">
-                        <i className="fas fa-shopping-cart fa-fw" />{cart.length} items ($ {cost.toFixed(2)})
+                        <i className="fas fa-shopping-cart fa-fw" />{cart.length} items ($ {Number(cost).toFixed(2)})
                         <Button onClick={this.showCheckout} className="button-ml" bsStyle="warning" disabled={cart.length === 0}>Checkout</Button>
                     </span>
                     <span className="shopping-cart pull-right mt-5">
