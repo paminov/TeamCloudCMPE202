@@ -3,6 +3,12 @@ import { success, failure } from "./lib/response-lib";
 import { getCart } from "./lib/cart-lib";
 import uuid from "uuid";
 
+/**
+ * Function a users current cart
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON Response containing cart items of a user
+ */
 export async function retrieveCart(event, context) {
     try {
         const result = await getCart(event);
@@ -18,6 +24,12 @@ export async function retrieveCart(event, context) {
     }
 }
 
+/**
+ * Function to add an item to a cart
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON Response containing updated cart items of the user
+ */
 export async function addItem(event, context) {
     const data = JSON.parse(event.body);
     const cart = await getCart(event);
@@ -49,6 +61,13 @@ export async function addItem(event, context) {
     }
 }
 
+/**
+ * Function to remove an item from a cart
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @param callback: Callback function used to return Response object or error for Lambdas 
+ * @return JSON Response containing updated cart items of the user
+ */
 export async function removeItem(event, context, callback) {
     const cart = await getCart(event);
     const item = cart.Item.menuItems.splice(event.pathParameters.item, 1)[0];
@@ -78,6 +97,13 @@ export async function removeItem(event, context, callback) {
     }
 }
 
+/**
+ * Function to clear a users cart
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @param callback: Callback function used to return Response object or error for Lambdas 
+ * @return JSON Response containing success or failure of cart clear
+ */
 export async function clearCart(event, context, callback) {
     const cart = await getCart(event);
     const params = {
