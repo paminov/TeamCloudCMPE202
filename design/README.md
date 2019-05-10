@@ -21,4 +21,4 @@ components where chosen for system design:
 
 
 #### API Details
-![API Details](api.png)
+![API Details](apis.png)
