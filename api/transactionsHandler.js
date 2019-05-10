@@ -150,17 +150,29 @@ export async function getTransactions(event, context) {
 }
 
 export async function clearTransactions(event, context) {
-
-    const params = {
+    const scan_params = {
         TableName: process.env.transactiontableName,
         Key: {
             userID: event.requestContext.identity.cognitoIdentityId
-        },
-        ReturnValues: 'ALL_OLD'
+        }
     };
 
     try{
-        await dynamoDbLib.call("delete", params);
+        const result = await dynamoDbLib.call("scan", scan_params);
+        console.log("RESULT: ", result);
+        var params = {
+            TableName: process.env.transactiontableName,
+            Key: {
+                transactionId: '',
+                userID: event.requestContext.identity.cognitoIdentityId
+            },
+            ReturnValues: 'ALL_OLD'
+        };
+        for (var i in result.Items) {
+            params.Key.transactionId = result.Items[i].transactionId;
+            console.log(params)
+            await dynamoDbLib.call("delete", params);
+        }
         return success({ status: true });
     } catch (e) {
       console.log(e);
