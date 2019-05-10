@@ -1,6 +1,7 @@
 import * as dynamoDbLib from "./lib/dynamodb-lib";
 import { success, failure } from "./lib/response-lib";
 import AWS from "aws-sdk";
+import uuid from "uuid";
 AWS.config.region = "us-west-2";
 
 const lambdaName = "starbucks-app-api-" + process.env.stage;
@@ -89,44 +90,17 @@ export async function addTransaction(event, context) {
 
             console.log('Response of CardUpdate',respUpdateCard);
 
+            console.log("Calling Put on transaction table");
             var params = {
-                TableName: process.env.transactiontableName,
-                Key: {
-                    userID: event.requestContext.identity.cognitoIdentityId
-                },
-            }
-
-            console.log("Calling Get on transaction table");
-            var result =  await dynamoDbLib.call("get", params);
-
-            if(!result.Item) {
-                console.log("Calling Put on transaction table");
-                params = {
-                TableName: process.env.transactiontableName,
-                Item: {
-                    userID: event.requestContext.identity.cognitoIdentityId,
-                    menuItems: cartItem.menuItems,
-                    totalCost: cartItem.totalCost,
-                    }
-                };
-                await dynamoDbLib.call("put", params);
-            } else {
-                console.log("Calling update on transaction table");
-                params = {
-                    TableName: process.env.cardstableName,
-                    Key: {
-                        userID: event.requestContext.identity.cognitoIdentityId
-                    },
-                        UpdateExpression: "SET menuItems = :menuItems, totalCost = :totalCost",
-                        ExpressionAttributeValues: {
-                            ":menuItems": cartItem.menuItems,
-                            ":totalCost": cartItem.totalCost
-                        }
-                };
-                await dynamoDbLib.call("update", params);
-            }
-
-            //Clear The Cart
+            TableName: process.env.transactiontableName,
+            Item: {
+                transactionId: uuid.v1(),
+                userID: event.requestContext.identity.cognitoIdentityId,
+                menuItems: cartItem.menuItems,
+                totalCost: cartItem.totalCost,
+                }
+            };
+            await dynamoDbLib.call("put", params);
 
             const paramsClearCart = {
             FunctionName: lambdaName + "-clearCart",
@@ -162,7 +136,7 @@ export async function getTransactions(event, context) {
     };
 
     try{
-        const result = await dynamoDbLib.call("get", params);
+        const result = await dynamoDbLib.call("scan", params);
         if (result) {
           // Return the retrieved item
           return success(result);
