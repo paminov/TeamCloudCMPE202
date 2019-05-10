@@ -130,9 +130,13 @@ export async function addTransaction(event, context) {
 export async function getTransactions(event, context) {
     const params = {
         TableName: process.env.transactiontableName,
-        Key: {
-            userID: event.requestContext.identity.cognitoIdentityId
-        }
+		FilterExpression: '#userID = :userId',
+		ExpressionAttributeNames: {
+    		'#userID': 'userID',
+		},
+		ExpressionAttributeValues: {
+            ':userId': event.requestContext.identity.cognitoIdentityId,
+		},
     };
 
     try{
@@ -152,9 +156,13 @@ export async function getTransactions(event, context) {
 export async function clearTransactions(event, context) {
     const scan_params = {
         TableName: process.env.transactiontableName,
-        Key: {
-            userID: event.requestContext.identity.cognitoIdentityId
-        }
+		FilterExpression: '#userID = :userId',
+		ExpressionAttributeNames: {
+    		'#userID': 'userID',
+		},
+		ExpressionAttributeValues: {
+            ':userId': event.requestContext.identity.cognitoIdentityId,
+		},
     };
 
     try{
