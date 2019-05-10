@@ -39,7 +39,7 @@ export async function retrieveCard(event, context) {
           // Return the retrieved item
           return success(result.Item);
         } else {
-          return failure({ status: false, error: "Item not found."});
+          return success({cardId:"", pin: "", balance: "0"});
         }
     } catch (e) {
       console.log(e);
