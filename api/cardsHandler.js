@@ -9,7 +9,7 @@ export async function createCard(event, context) {
         TableName: process.env.cardstableName,
         Item: {
             userId: event.requestContext.identity.cognitoIdentityId,
-            cardId: data.cardNumber,
+            cardNumber: data.cardNumber,
             pin: data.pin,
             balance: data.balance,
         }
@@ -39,7 +39,7 @@ export async function retrieveCard(event, context) {
           // Return the retrieved item
           return success(result.Item);
         } else {
-          return success({cardId:"", pin: "", balance: "0"});
+          return success({cardNumber:"", pin: "", balance: "0"});
         }
     } catch (e) {
       console.log(e);
