@@ -3,6 +3,12 @@
 * UI
 * Deployment
 
+#### Documents
+* [Link to Project Board](project_board.xlsx)
+* [Link to Sprint Task Sheet](sprint_task_sheet.xlsx)
+* [Link to Daily Standup Meeting Journal](standup_journal.xlsx)
+* [Link to Presentation Slides](Team-Cloud-202-Final-Project.pptx)
+
 #### Design Notes
 
 Serverless design was chosen for the application since there is no component of
@@ -29,10 +35,3 @@ components where chosen for system design:
 
 #### UI Design
 ![UI Wireframe](UIWireFrame.jpg)
-
-#### Documents
-* ![Link to Project Board](project_board.xlsx)
-* ![Link to Sprint Task Sheet](sprint_task_sheet.xlsx)
-* ![Link to Daily Standup Meeting Journal](standup_journal.xlsx)
-* ![Link to Presentation Slides](Team-Cloud-202-Final-Project.pptx)
-
