@@ -7,6 +7,12 @@ AWS.config.region = "us-west-2";
 const lambdaName = "starbucks-app-api-" + process.env.stage;
 console.log('STAGE', process.env.stage);
 
+/**
+ * Function which invokes the given Lambda Function
+ * @param lambda: Name of Lambda Function
+ * @param params: JSON object of Expected Request parameters by Lambda Function
+ * @return JSON Response by Lambda Function
+ */
 const getLambda = (lambda, params) => new Promise((resolve, reject) => {
   lambda.invoke(params, (error, data) => {
     if (error) {
@@ -17,7 +23,12 @@ const getLambda = (lambda, params) => new Promise((resolve, reject) => {
   });
 });
 
-//creates preference
+/**
+ * Function to add transaction details performed by user
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON Response, on success 200 response code or on error 500 response code with error message
+ */
 export async function addTransaction(event, context) {
     try{
         const lambda = new AWS.Lambda();
@@ -127,6 +138,13 @@ export async function addTransaction(event, context) {
 
 }
 
+/**
+ * Function to get history of transactions performed by user
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON Response, on success 200 response code with Body containing Transaction Hostory 
+ *         or on error 500 response code with error message
+ */
 export async function getTransactions(event, context) {
     const params = {
         TableName: process.env.transactiontableName,
@@ -153,6 +171,12 @@ export async function getTransactions(event, context) {
     }
 }
 
+/**
+ * Function to delete history of transactions performed by user
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON Response, on success 200 response code or on error 500 response code with error message
+ */
 export async function clearTransactions(event, context) {
     const scan_params = {
         TableName: process.env.transactiontableName,
