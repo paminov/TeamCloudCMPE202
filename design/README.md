@@ -18,3 +18,7 @@ components where chosen for system design:
 * AWS Cognito - For user authentication
 
 ![Design Diagram](design.png)
+
+
+#### API Details
+![API Details](api.png)
