@@ -2,6 +2,12 @@ import * as dynamoDbLib from "./lib/dynamodb-lib";
 import { success, failure } from "./lib/response-lib";
 import AWS from "aws-sdk";
 
+/**
+ * Handler for /menu GET call
+ * @param event: JSON Object containing Request Object and Path parameters
+ * @param context: Lambda Context
+ * @return JSON object containing list of menu items or error message
+ */
 export async function list(event, context) {
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
     const params = {
