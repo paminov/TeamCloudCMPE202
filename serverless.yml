@@ -30,13 +30,13 @@ custom:
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: prod
+  stage: dev
   region: us-west-2
 
   # These environment variables are made available to our functions
   # under process.env.
   environment:
-    stage: prod
+    stage: dev
     cardstableName: ${self:custom.cardstableName}
     carttableName: ${self:custom.carttableName}
     menutableName: ${self:custom.menutableName}
@@ -167,7 +167,7 @@ functions:
           path: transactions
           method: delete
           cors: true
-          authorizer: aws_iam        
+          authorizer: aws_iam
 
 # Create our resources with separate CloudFormation templates
 resources:
