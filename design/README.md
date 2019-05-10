@@ -17,6 +17,8 @@ components where chosen for system design:
 * DynamoDB - NoSQL db. Gives us flexibility if schema changes occur
 * AWS Cognito - For user authentication
 * AWS S3 - Deployement of UI components
+* AWS CloudWatch - used for debugging of the deployment. Lambda functions would create their logs in CloudWatch
+
 
 ![Design Diagram](design.png)
 
